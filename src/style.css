@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Inter Tight", Inter, system-ui, sans-serif;
+  --font-sans: Inter, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-paper: #FAFAF8;
+  --color-paper-sub: #F4F4EE;
+  --color-ink: #1A1A1A;
+  --color-pine: #0E8C7F;
+  --color-pine-dark: #0B7A6F;
+  --color-code: #101513;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #FAFAF8;
+    color: #1A1A1A;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01" on, "cv11" on;
+  }
+
+  ::selection {
+    background: #0E8C7F;
+    color: #FAFAF8;
+  }
+
+  :focus-visible {
+    outline: 2px solid #0E8C7F;
+    outline-offset: 2px;
+  }
+}
+
+/* Hairline borders matching reference site */
+.hairline {
+  border: 1px solid rgba(26, 26, 26, 0.14);
+}
+.hairline-b {
+  border-bottom: 1px solid rgba(26, 26, 26, 0.14);
+}
+.hairline-t {
+  border-top: 1px solid rgba(26, 26, 26, 0.14);
+}
+.hairline-r {
+  border-right: 1px solid rgba(26, 26, 26, 0.14);
+}
+.hairline-l {
+  border-left: 1px solid rgba(26, 26, 26, 0.14);
+}
+
+.border-hairline {
+  border-color: rgba(26, 26, 26, 0.14);
+}
+
+/* Industrial score plate number typography */
+.plate-num {
+  font-family: 'Inter Tight', Inter, system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  transform: scaleY(0.94);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Terminal cursor */
+@keyframes caret-blink {
+  0%, 70%, 100% { opacity: 1; }
+  20%, 50% { opacity: 0; }
+}
+
+.tw-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: -0.15em;
+  background: #7EF0C9;
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* Floating label input field matching reference site */
+.field {
+  position: relative;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  background-color: transparent;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  color: #1A1A1A;
+  border: 1px solid rgba(26, 26, 26, 0.25);
+  border-radius: 3px;
+  padding: 1.35rem 0.875rem 0.55rem;
+  font-size: 0.95rem;
+  min-height: 54px;
+  transition: border-color 0.16s ease;
+  appearance: none;
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: #0E8C7F;
+  outline: none;
+  box-shadow: 0 0 0 1px #0E8C7F;
+}
+
+.field label {
+  position: absolute;
+  left: 0.875rem;
+  top: 1.05rem;
+  font-size: 0.92rem;
+  color: rgba(26, 26, 26, 0.55);
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 0.16s ease, color 0.16s ease;
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field textarea:focus + label,
+.field textarea:not(:placeholder-shown) + label,
+.field select:focus + label,
+.field select.filled + label {
+  transform: translateY(-0.7rem) scale(0.72);
+  color: #0E8C7F;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+/* Terminal easter-egg mode */
+.terminal-mode {
+  background: #050807 !important;
+}
+
+.terminal-mode * {
+  font-family: "JetBrains Mono", Menlo, Consolas, monospace !important;
+  color: #41FF7E !important;
+  background-color: transparent !important;
+  border-color: rgba(65, 255, 126, 0.4) !important;
+  box-shadow: none !important;
+  text-shadow: 0 0 6px rgba(65, 255, 126, 0.55);
+}
+
+.terminal-mode .code-card,
+.terminal-mode .code-card * {
+  color: #41FF7E !important;
+}
+
+.terminal-mode img,
+.terminal-mode svg {
+  filter: grayscale(1) brightness(0.9) sepia(1) hue-rotate(80deg) saturate(3);
+}
+
+@keyframes scan-shift {
+  0% { background-position-y: 0; }
+  100% { background-position-y: 4px; }
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.3) 3px,
+    rgba(0, 0, 0, 0.3) 4px
+  );
+  mix-blend-mode: multiply;
+  animation: scan-shift 0.4s linear infinite;
+}
+
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 20, 8, 0.6) 100%);
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .tw-caret {
+    animation: none;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
